@@ -1,30 +1,18 @@
-def main():
-    print("App inicial - estructura lista")
-
-if __name__ == "__main__":
-    main()
-from models.gbm import simulate_gbm_terminal
+from models.pricing import black_scholes_call, black_scholes_put
 
 
 def main():
-    spot = 100
-    drift = 0.08
-    volatility = 0.25
-    tenor_years = 0.5
-    simulations = 10000
+    S = 100   # spot
+    K = 100   # strike
+    T = 0.5   # 6 meses
+    r = 0.1083
+    sigma = 0.25
 
-    terminal_prices = simulate_gbm_terminal(
-        spot=spot,
-        drift=drift,
-        volatility=volatility,
-        tenor_years=tenor_years,
-        simulations=simulations
-    )
+    call = black_scholes_call(S, K, T, r, sigma)
+    put = black_scholes_put(S, K, T, r, sigma)
 
-    print("Número de simulaciones:", len(terminal_prices))
-    print("Precio promedio terminal:", round(terminal_prices.mean(), 2))
-    print("Precio mínimo:", round(terminal_prices.min(), 2))
-    print("Precio máximo:", round(terminal_prices.max(), 2))
+    print("Call price:", round(call, 2))
+    print("Put price:", round(put, 2))
 
 
 if __name__ == "__main__":
